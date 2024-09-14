@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "group:Architecture"
+      name = "Architecture">
+      <FileRef
+         location = "group:MVVM+C/MVVM+C.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:MVVM/MVVM.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:CustomUI"
+      name = "CustomUI">
+      <FileRef
+         location = "group:DD4Y+UIKit/DD4Y+UIKit.xcodeproj">
+      </FileRef>
+   </Group>
+</Workspace>
