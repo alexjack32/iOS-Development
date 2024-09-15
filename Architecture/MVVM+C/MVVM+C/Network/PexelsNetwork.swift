@@ -3,55 +3,63 @@
 //  MVVM+C
 //
 //  Created by Alexander Jackson on 9/13/24.
+// vuXNgk6kYpCbuhCyh05EBHpHUUMumigHZTfx3QpyMg9onUiHGbmHmuLN
+//
+//
 //
 
 import Combine
 import Foundation
 
 class PexelsNetwork {
-    private let apiKey = "vuXNgk6kYpCbuhCyh05EBHpHUUMumigHZTfx3QpyMg9onUiHGbmHmuLN"
-    private let baseURL = "https://api.pexels.com/v1/"
-    private let videoBaseURL = "https://api.pexels.com/videos/"
+    static let shared = PexelsNetwork()
+    private let apiKey = Bundle.main.object(forInfoDictionaryKey: "PexelsAPIKey") as? String
     
-    func fetchPhotos(query: String, page: Int = 1, perPage: Int = 10) -> AnyPublisher<PexelsResponse<PhotoDetails>, Error> {
-        let url = URL(string: "\(baseURL)search?query=\(query)&page=\(page)&per_page=\(perPage)")!
-        return fetch(url: url)
-    }
-    
-    func fetchVideos(query: String, page: Int = 1, perPage: Int = 10) -> AnyPublisher<PexelsResponse<VideoDetails>, Error> {
-        let url = URL(string: "\(videoBaseURL)search?query=\(query)&page=\(page)&per_page=\(perPage)")!
-        return fetch(url: url)
-    }
-    
-    private func fetch<T: Decodable>(url: URL) -> AnyPublisher<PexelsResponse<T>, Error> {
-        var request = URLRequest(url: url)
-        request.setValue(apiKey, forHTTPHeaderField: "Authorization")
+    func request<T: Hashable & Decodable>(
+        endpoint: PexelsEndpoint,
+        completion: @escaping (Result<PexelsItem<T>, Error>) -> Void
+    ) {
+        guard let apiKey = apiKey else {
+            completion(.failure(NSError(domain: "Missing API Key", code: 0, userInfo: nil)))
+            return
+        }
         
-        return URLSession.shared.dataTaskPublisher(for: request)
-            .tryMap { output in
-                guard let response = output.response as? HTTPURLResponse, response.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
-                }
-                return output.data
+        var urlRequest = URLRequest(url: endpoint.url)
+        urlRequest.addValue(apiKey, forHTTPHeaderField: "Authorization")
+        urlRequest.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
             }
-            .decode(type: PexelsResponse<T>.self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
+            
+            guard let data = data else {
+                completion(.failure(NSError(domain: "No data", code: 0, userInfo: nil)))
+                return
+            }
+            
+            do {
+                let decodedData = try JSONDecoder().decode(PexelsItem<T>.self, from: data)
+                completion(.success(decodedData))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
     }
 }
 
-    struct PexelsResponse<T: Decodable>: Decodable {
-        let page: Int
-        let perPage: Int
-        let items: [T]
-        let totalResults: Int
-        let nextPage: String?
-
-        enum CodingKeys: String, CodingKey {
-            case page
-            case perPage = "per_page"
-            case items = "photos" // For photos; adjust for videos if needed
-            case totalResults = "total_results"
-            case nextPage = "next_page"
+enum PexelsEndpoint {
+    case photos(page: Int, perPage: Int)
+    case videos(page: Int, perPage: Int)
+    
+    var url: URL {
+        switch self {
+        case .photos(let page, let perPage):
+            return URL(string: "https://api.pexels.com/v1/curated?page=\(page)&per_page=\(perPage)")!
+        case .videos(let page, let perPage):
+            return URL(string: "https://api.pexels.com/videos/popular?page=\(page)&per_page=\(perPage)")!
         }
     }
+}

@@ -24,7 +24,7 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(viewController, animated: true)
     }
 
-    func presentPokemon(viewController: UIViewController) {
+    func presentNextViewController(viewController: UIViewController) {
         navigationController.pushViewController(viewController, animated: true)
     }
 //    func showPokemonDetails(for pokemon: Pokemon) {

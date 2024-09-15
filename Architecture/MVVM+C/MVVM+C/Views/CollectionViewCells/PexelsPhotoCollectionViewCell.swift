@@ -24,7 +24,7 @@ class PexelsPhotoCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with photo: PhotoDetails) {
+    func configure(with photo: PexelsPhoto) {
         loadImage(from: photo.src.large)
     }
 

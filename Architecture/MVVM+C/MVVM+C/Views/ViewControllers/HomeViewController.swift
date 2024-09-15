@@ -28,7 +28,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedViewController = items[indexPath.row].viewController
-        coordinator?.presentPokemon(viewController: selectedViewController)
+        coordinator?.presentNextViewController(viewController: selectedViewController)
     }
 }
 
@@ -39,7 +39,7 @@ class HomeViewController: UIViewController {
     let displayView = BaseView()
     let items: [HomeViewModel] = [
         HomeViewModel(text: "Pokemon", viewController: PokemonViewController()),
-//        HomeViewModel(text: "Pexels", viewController: PexelsViewController())
+        HomeViewModel(text: "Pexels", viewController: PexelsViewController())
     ]
     
     init() {

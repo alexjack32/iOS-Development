@@ -1,32 +1,157 @@
-import Combine
-import Foundation
+//
+//  PexelsNetwork.swift
+//  MVVM+C
+//
+//  Created by Alexander Jackson on 9/13/24.
+//
 
-class PexelsViewModel: ObservableObject {
-    @Published var mediaItems: [Media] = []
-    @Published var error: Error?
+import Foundation
+import Combine
+import AVKit
+
+class PexelsViewModel {
+    @Published var mediaItems: [PexelsMediaItem] = []
+    var mediaItemsSubject = PassthroughSubject<[PexelsMediaItem], Never>()
     
     private var cancellables = Set<AnyCancellable>()
-    private let service = PexelsNetwork()
     
-//    func fetchMedia(query: String, page: Int = 1, perPage: Int = 10) {
-//        Publishers.Zip(
-//            service.fetchPhotos(query: query, page: page, perPage: perPage),
-//            service.fetchVideos(query: query, page: page, perPage: perPage)
-//        )
-//        .map { photoResponse, videoResponse in
-//            // Combine the photo and video items into a unified media array
-//            let photoMedia = photoResponse.items.map { Media(from: $0 as! Decoder) }
-//            let videoMedia = videoResponse.items.map { Media(from: $0 as! Decoder) }
-//            
-//            return photoMedia + videoMedia // Combine photo and video media
-//        }
-//        .sink(receiveCompletion: { completion in
-//            if case .failure(let error) = completion {
-//                self.error = error
-//            }
-//        }, receiveValue: { [weak self] mediaItems in
-//            self?.mediaItems = mediaItems
-//        })
-//        .store(in: &cancellables)
-//    }
+    private var currentPage: Int = 1
+    private var perPage: Int = 20
+    private var isFetching: Bool = false
+    private var hasMoreMedia: Bool = true
+    
+    // Cache for images and videos
+    private let mediaCache = MediaCache.shared
+
+    func fetchMedia() {
+        currentPage = 1
+        mediaItems.removeAll()
+        fetchMediaPage(page: currentPage)
+    }
+    
+    func fetchMoreMedia() {
+        guard !isFetching && hasMoreMedia else { return }
+        currentPage += 1
+        fetchMediaPage(page: currentPage)
+    }
+    
+    private func fetchMediaPage(page: Int) {
+        isFetching = true
+        
+        let photosPublisher = fetchPhotos(page: page, perPage: perPage)
+        let videosPublisher = fetchVideos(page: page, perPage: perPage)
+        
+        Publishers.Zip(photosPublisher, videosPublisher)
+            .map { photos, videos in
+                return photos + videos
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] combinedMediaItems in
+                guard let self = self else { return }
+                
+                if combinedMediaItems.isEmpty {
+                    self.hasMoreMedia = false
+                } else {
+                    self.mediaItems.append(contentsOf: combinedMediaItems)
+                    self.mediaItemsSubject.send(self.mediaItems)
+                }
+                
+                self.isFetching = false
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func fetchPhotos(page: Int, perPage: Int) -> AnyPublisher<[PexelsMediaItem], Never> {
+        return Future<[PexelsMediaItem], Never> { promise in
+            PexelsNetwork.shared.request(endpoint: .photos(page: page, perPage: perPage)) { [weak self] (result: Result<PexelsItem<PexelsPhoto>, Error>) in
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let items):
+                    let mediaItems = items.items.map { item -> PexelsMediaItem in
+                        let mediaItem = PexelsMediaItem.photo(item)
+                        // Cache the image
+                        if let url = URL(string: item.src.original) {
+                            self.cacheImage(from: url)
+                        }
+                        return mediaItem
+                    }
+                    promise(.success(mediaItems))
+                case .failure(let error):
+                    print("Error fetching photos: \(error)")
+                    promise(.success([]))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    private func fetchVideos(page: Int, perPage: Int) -> AnyPublisher<[PexelsMediaItem], Never> {
+        return Future<[PexelsMediaItem], Never> { promise in
+            PexelsNetwork.shared.request(endpoint: .videos(page: page, perPage: perPage)) { [weak self] (result: Result<PexelsItem<PexelsVideo>, Error>) in
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let items):
+                    let mediaItems = items.items.map { item -> PexelsMediaItem in
+                        let mediaItem = PexelsMediaItem.video(item)
+                        // Cache the video
+                        if let url = URL(string: item.videoFiles.first?.link ?? "") {
+                            self.cacheVideo(from: url)
+                        }
+                        return mediaItem
+                    }
+                    promise(.success(mediaItems))
+                case .failure(let error):
+                    print("Error fetching videos: \(error)")
+                    promise(.success([]))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    private func cacheImage(from url: URL) {
+        let nsUrl = url as NSURL
+        if mediaCache.cachedImage(for: nsUrl) == nil {
+            URLSession.shared.dataTask(with: url) { data, _, _ in
+                if let data = data, let image = UIImage(data: data) {
+                    self.mediaCache.cacheImage(image, for: nsUrl)
+                }
+            }.resume()
+        }
+    }
+    
+    private func cacheVideo(from url: URL) {
+        let nsUrl = url as NSURL
+        if mediaCache.cachedVideo(for: nsUrl) == nil {
+            let playerItem = AVPlayerItem(url: url)
+            self.mediaCache.cacheVideo(playerItem, for: nsUrl)
+        }
+    }
+}
+
+class MediaCache {
+    static let shared = MediaCache()
+
+    private init() {}
+    
+    private let imageCache = NSCache<NSURL, UIImage>()
+    private let videoCache = NSCache<NSURL, AVPlayerItem>()
+    
+    func cacheImage(_ image: UIImage, for url: NSURL) {
+        imageCache.setObject(image, forKey: url)
+    }
+    
+    func cachedImage(for url: NSURL) -> UIImage? {
+        return imageCache.object(forKey: url)
+    }
+    
+    func cacheVideo(_ playerItem: AVPlayerItem, for url: NSURL) {
+        videoCache.setObject(playerItem, forKey: url)
+    }
+    
+    func cachedVideo(for url: NSURL) -> AVPlayerItem? {
+        return videoCache.object(forKey: url)
+    }
 }

@@ -34,6 +34,7 @@
 		50BB7C6D2C721F27002FC184 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB7C6C2C721F27002FC184 /* Coordinator.swift */; };
 		50BB7C752C723049002FC184 /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB7C742C723049002FC184 /* NSLayoutConstraint+Extension.swift */; };
 		50BB7C7C2C7239AD002FC184 /* UserViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB7C7B2C7239AD002FC184 /* UserViewControllerTest.swift */; };
+		50BE497B2C9707B6009C58DA /* PexelsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE497A2C9707B6009C58DA /* PexelsCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,7 @@
 		50BB7C6C2C721F27002FC184 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		50BB7C742C723049002FC184 /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
 		50BB7C7B2C7239AD002FC184 /* UserViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewControllerTest.swift; sourceTree = "<group>"; };
+		50BE497A2C9707B6009C58DA /* PexelsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				5029CF102C9331F6008E5F42 /* PokemonCollectionViewCell.swift */,
 				507693CA2C942C3F0071A6EC /* PexelsPhotoCollectionViewCell.swift */,
 				507693CC2C942C5F0071A6EC /* PexelsVideoCollectionViewCell.swift */,
+				50BE497A2C9707B6009C58DA /* PexelsCollectionViewCell.swift */,
 			);
 			path = CollectionViewCells;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 				507693BC2C9403EF0071A6EC /* PokemonViewController.swift in Sources */,
 				5029CF112C9331F6008E5F42 /* PokemonCollectionViewCell.swift in Sources */,
 				507693C32C94274A0071A6EC /* PexelsNetwork.swift in Sources */,
+				50BE497B2C9707B6009C58DA /* PexelsCollectionViewCell.swift in Sources */,
 				5029CEA92C800093008E5F42 /* HomeViewController.swift in Sources */,
 				507693BA2C94023D0071A6EC /* PokemonCollectionView.swift in Sources */,
 				50BB7C6B2C70E2A3002FC184 /* UIView+Extension.swift in Sources */,

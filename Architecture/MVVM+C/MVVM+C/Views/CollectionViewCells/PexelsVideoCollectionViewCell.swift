@@ -29,13 +29,13 @@ class PexelsVideoCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with video: VideoDetails) {
-        if let image = video.videoPictures.first?.picture,
-           let video = video.videoFiles.first?.link {
-            loadImage(from: image)
-            loadVideo(from: video)
-        }
-    }
+//    func configure(with video: ) {
+//        if let image = video.videoPictures.first?.picture,
+//           let video = video.videoFiles.first?.link {
+//            loadImage(from: image)
+//            loadVideo(from: video)
+//        }
+//    }
 
     private func loadImage(from urlString: String) {
         guard let url = URL(string: urlString) else { return }
