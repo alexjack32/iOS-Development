@@ -9,8 +9,11 @@ import UIKit
 import AVKit
 
 class PexelsCollectionViewCell: UICollectionViewCell {
-    private let imageView = UIImageView()
-    private let playerViewController = AVPlayerViewController()
+    private var imageView: UIImageView = UIImageView()
+    private var videoPlayer: AVPlayer?
+    private var playerLayer: AVPlayerLayer?
+    
+    private let mediaCache = MediaCache.shared
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,79 +24,91 @@ class PexelsCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cleanupForReuse()
+    }
+    
     private func setupViews() {
-        imageView.contentMode = .scaleAspectFill
+        imageView.frame = contentView.bounds
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         contentView.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
-        
-        playerViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        playerViewController.showsPlaybackControls = false
-        contentView.addSubview(playerViewController.view)
-        NSLayoutConstraint.activate([
-            playerViewController.view.topAnchor.constraint(equalTo: contentView.topAnchor),
-            playerViewController.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            playerViewController.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            playerViewController.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
-        playerViewController.view.isHidden = true
     }
     
     func configure(with photo: PexelsPhoto) {
-        resetCellForReuse()
-        imageView.isHidden = false
-        playerViewController.view.isHidden = true
-        
-        if let url = URL(string: photo.src.original) {
-            let nsUrl = url as NSURL
-            if let cachedImage = MediaCache.shared.cachedImage(for: nsUrl) {
-                imageView.image = cachedImage
-            } else {
-                loadImage(from: url)
-            }
-        }
+        cleanupForReuse() // Ensure the cell is cleaned up before configuring
+        loadImage(for: photo)
     }
     
     func configure(with video: PexelsVideo) {
-        resetCellForReuse()
-        imageView.isHidden = true
-        playerViewController.view.isHidden = false
+        cleanupForReuse() // Ensure the cell is cleaned up before configuring
+        loadVideo(for: video)
+    }
+    
+    // Helper method to clean up the cell before reuse or reconfiguration
+    private func cleanupForReuse() {
+        playerLayer?.removeFromSuperlayer()
+        playerLayer = nil
+        videoPlayer?.pause()
+        videoPlayer = nil
         
-        if let url = URL(string: video.videoFiles.first?.link ?? "") {
-            loadVideo(from: url)
+        imageView.image = nil
+    }
+    
+    // Helper method to load and cache an image
+    private func loadImage(for photo: PexelsPhoto) {
+        if let cachedImage = mediaCache.cachedImage(for: URL(string: photo.src.original)! as NSURL) {
+            imageView.image = cachedImage
+        } else {
+            fetchImage(from: URL(string: photo.src.original)!)
         }
     }
     
-    private func loadImage(from url: URL) {
+    // Helper method to load and cache a video
+    private func loadVideo(for video: PexelsVideo) {
+        if let cachedVideo = mediaCache.cachedVideo(for: URL(string: video.videoFiles.first?.link ?? "")! as NSURL) {
+            setupVideoPlayer(with: cachedVideo)
+        } else {
+            fetchVideo(from: URL(string: video.videoFiles.first?.link ?? "")!)
+        }
+    }
+    
+    // Helper method to fetch image asynchronously
+    private func fetchImage(from url: URL) {
         URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
             guard let self = self, let data = data, let image = UIImage(data: data) else { return }
             DispatchQueue.main.async {
                 self.imageView.image = image
-                MediaCache.shared.cacheImage(image, for: url as NSURL)
+                self.mediaCache.cacheImage(image, for: url as NSURL)
             }
         }.resume()
     }
     
-    private func loadVideo(from url: URL) {
+    // Helper method to fetch video asynchronously
+    private func fetchVideo(from url: URL) {
         let playerItem = AVPlayerItem(url: url)
-        playerViewController.player = AVPlayer(playerItem: playerItem)
-        playerViewController.player?.play()
+        DispatchQueue.main.async {
+            self.setupVideoPlayer(with: playerItem)
+            self.mediaCache.cacheVideo(playerItem, for: url as NSURL)
+        }
     }
     
-    private func resetCellForReuse() {
-        imageView.image = nil
-        playerViewController.player?.pause()
-        playerViewController.player = nil
+    // Helper method to set up the video player
+    private func setupVideoPlayer(with playerItem: AVPlayerItem) {
+        videoPlayer = AVPlayer(playerItem: playerItem)
+        playerLayer = AVPlayerLayer(player: videoPlayer)
+        playerLayer?.frame = contentView.bounds
+        playerLayer?.videoGravity = .resizeAspectFill
+        
+        if let playerLayer = playerLayer {
+            contentView.layer.addSublayer(playerLayer)
+        }
+        
+        videoPlayer?.play()
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        resetCellForReuse()
+    func pauseVideo() {
+        videoPlayer?.pause()
     }
 }

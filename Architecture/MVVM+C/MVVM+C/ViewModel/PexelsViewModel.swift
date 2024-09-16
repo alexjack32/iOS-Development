@@ -16,28 +16,30 @@ class PexelsViewModel {
     private var cancellables = Set<AnyCancellable>()
     
     private var currentPage: Int = 1
-    private var perPage: Int = 20
-    private var isFetching: Bool = false
+    private var perPage: Int = 2
+    private var isFetching: Bool = false  // Flag to track fetching state
     private var hasMoreMedia: Bool = true
     
-    // Cache for images and videos
     private let mediaCache = MediaCache.shared
 
+    // Initial media fetch (e.g., when the view first loads)
     func fetchMedia() {
+        guard !isFetching else { return }  // Prevent multiple fetches
+        isFetching = true
         currentPage = 1
-        mediaItems.removeAll()
+        mediaItems.removeAll() // Remove previous items to start fresh
         fetchMediaPage(page: currentPage)
     }
     
+    // Fetch additional media (e.g., when scrolling to the end of the list)
     func fetchMoreMedia() {
-        guard !isFetching && hasMoreMedia else { return }
+        guard !isFetching && hasMoreMedia else { return }  // Prevent multiple fetches
+        isFetching = true
         currentPage += 1
         fetchMediaPage(page: currentPage)
     }
     
     private func fetchMediaPage(page: Int) {
-        isFetching = true
-        
         let photosPublisher = fetchPhotos(page: page, perPage: perPage)
         let videosPublisher = fetchVideos(page: page, perPage: perPage)
         
@@ -56,7 +58,7 @@ class PexelsViewModel {
                     self.mediaItemsSubject.send(self.mediaItems)
                 }
                 
-                self.isFetching = false
+                self.isFetching = false  // Reset the fetching flag
             }
             .store(in: &cancellables)
     }
