@@ -18,6 +18,9 @@ class PokemonViewController: UIViewController {
     var hasData = true
     private var cancellables = Set<AnyCancellable>()
     
+    // Track ongoing image fetch requests
+    private var ongoingImageRequests: [Int: AnyCancellable] = [:]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView = PokemonCollectionView(frame: .zero)
@@ -90,24 +93,41 @@ extension PokemonViewController: UICollectionViewDelegate,
                                  UICollectionViewDelegateFlowLayout,
                                  UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        if indexPaths.contains(where: { $0.item >= items.count - 1 }) {
-            loadPokemonData() // Load more data when nearing the end of the list
-        }
-        
-        for indexPath in indexPaths {
-            let pokemon = items[indexPath.row]
-            if cache[pokemon.id] == nil {
-                networkClient.fetchPokemonImage(for: pokemon.id)
-                    .receive(on: DispatchQueue.main)
-                    .sink { [weak self] image in
-                        if let self {
-                            self.cache[pokemon.id] = image
+            if indexPaths.contains(where: { $0.item >= items.count - 5 }) {
+                loadPokemonData() // Load more data when nearing the end of the list
+            }
+            
+            for indexPath in indexPaths {
+                let pokemon = items[indexPath.item]
+                if cache[pokemon.id] == nil {
+                    let request = networkClient.fetchPokemonImage(for: pokemon.id)
+                        .receive(on: DispatchQueue.main)
+                        .sink { [weak self] image in
+                            self?.cache[pokemon.id] = image
                         }
-                    }
-                    .store(in: &cancellables)
+                    ongoingImageRequests[pokemon.id] = request
+                    request.store(in: &cancellables)
+                }
             }
         }
-    }
+
+        func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+            for indexPath in indexPaths {
+                let pokemon = items[indexPath.item]
+                if let request = ongoingImageRequests[pokemon.id] {
+                    request.cancel() // Cancel the ongoing request
+                    ongoingImageRequests.removeValue(forKey: pokemon.id) // Remove from tracking dictionary
+                }
+            }
+        }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+           let lastItemIndex = items.count - 1
+           
+           if indexPath.item == lastItemIndex - 5 { // Load data when near the end
+               loadPokemonData()
+           }
+       }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         items.count
@@ -139,7 +159,13 @@ extension PokemonViewController: UICollectionViewDelegate,
         return UICollectionViewCell()
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        collectionView.bounds.size
-    }
+    // Make sure this method is part of the UICollectionViewDelegateFlowLayout protocol
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            // Calculate the available width by subtracting section insets and interitem spacing
+            let padding: CGFloat = 10 + 10 + 10 // left inset + right inset + interitem spacing
+            let availableWidth = collectionView.frame.width - padding
+            let itemWidth = availableWidth / 2 // Two columns
+
+            return CGSize(width: itemWidth, height: itemWidth)
+        }
 }

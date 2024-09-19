@@ -13,7 +13,7 @@ class PokemonNetwork {
     private let limit = 20 // Number of items to fetch per request
     private var totalPokemon = 1302 // Default total count, will be updated dynamically
     
-    func fetchPokemonList(offset: Int = 0, limit: Int = 20) -> AnyPublisher<PokemonModel, Error> {
+    func fetchPokemonList(offset: Int = 0, limit: Int = 10) -> AnyPublisher<PokemonModel, Error> {
         let urlString = "https://pokeapi.co/api/v2/pokemon?offset=\(offset)&limit=\(limit)"
         guard let url = URL(string: urlString) else {
             return Fail(error: URLError(.badURL))

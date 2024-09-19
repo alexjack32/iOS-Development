@@ -26,10 +26,10 @@ class PexelsViewController: UIViewController, UICollectionViewDelegate {
     }
     
     private func setupCollectionView() {
-        let layout = CenteredCollectionViewFlowLayout() // Using your custom layout
+        let layout = CenteredCollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: view.frame.width, height: view.frame.height)
-        layout.minimumLineSpacing = 0 // To avoid spacing between items
+        layout.minimumLineSpacing = 0
         
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.delegate = self
@@ -49,7 +49,8 @@ class PexelsViewController: UIViewController, UICollectionViewDelegate {
             case .photo(let photo):
                 cell.configure(with: photo)
             case .video(let video):
-                cell.configure(with: video)
+                let player = self.viewModel.player(for: video)
+                cell.configure(with: player)
             }
             
             return cell
@@ -69,33 +70,42 @@ class PexelsViewController: UIViewController, UICollectionViewDelegate {
         var snapshot = NSDiffableDataSourceSnapshot<Section, PexelsMediaItem>()
         snapshot.appendSections([.main])
         
-        let uniqueItems = Array(Set(mediaItems)) // Remove duplicates if needed
-        snapshot.appendItems(uniqueItems)
+        // The ViewModel ensures media items are unique and stable
+        snapshot.appendItems(mediaItems)
         
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
-    // Pausing videos in cells that are no longer visible
+    // Pause all videos when scrolling to avoid multiple videos playing simultaneously
     func pauseVideosInInvisibleCells() {
-        // Get all currently visible cells
-        let visibleCells = collectionView.visibleCells as! [PexelsCollectionViewCell]
-        
-        // Get all index paths of visible items
-        let allIndexPaths = collectionView.indexPathsForVisibleItems
-        
-        // Iterate through all index paths to check if the cell is still visible
-        for indexPath in allIndexPaths {
-            // Get the cell for the current index path
-            if let cell = collectionView.cellForItem(at: indexPath) as? PexelsCollectionViewCell {
-                // Check if the cell contains a video
-                if case .video(_) = viewModel.mediaItems[indexPath.item] {
-                    // If the cell is not visible, pause the video
-                    if !visibleCells.contains(cell) {
-                        cell.pauseVideo()
-                    }
-                }
-            }
+        viewModel.pauseAllVideos()
+    }
+    
+    // Ensure that all videos are paused when leaving the screen
+    func pauseAllVideos() {
+        viewModel.pauseAllVideos()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // Pause videos during scrolling
+        pauseVideosInInvisibleCells()
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        // Pause videos when scrolling ends
+        pauseVideosInInvisibleCells()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            // Pause videos if dragging stops without deceleration
+            pauseVideosInInvisibleCells()
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        pauseAllVideos()
     }
 }
 
@@ -106,27 +116,6 @@ extension PexelsViewController: UICollectionViewDataSourcePrefetching {
         
         if maxIndex >= viewModel.mediaItems.count - 2 {
             viewModel.fetchMoreMedia()
-        }
-    }
-}
-
-// MARK: - UIScrollViewDelegate
-extension PexelsViewController: UIScrollViewDelegate {
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // Continuously pause videos as the user scrolls
-        pauseVideosInInvisibleCells()
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        // Ensure videos are paused when scrolling stops
-        pauseVideosInInvisibleCells()
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            // If not decelerating, ensure videos are paused when dragging ends
-            pauseVideosInInvisibleCells()
         }
     }
 }
@@ -143,14 +132,13 @@ class CenteredCollectionViewFlowLayout: UICollectionViewFlowLayout {
         guard let collectionView = collectionView else { return super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity) }
 
         let collectionViewSize = collectionView.bounds.size
-        let proposedContentOffsetCenterY = proposedContentOffset.y + 
-                                           collectionViewSize.height /
-                                           2
+        let proposedContentOffsetCenterY = proposedContentOffset.y +
+                                           collectionViewSize.height / 2
 
         if let layoutAttributes = self.layoutAttributesForElements(in: collectionView.bounds) {
             var closestAttribute: UICollectionViewLayoutAttributes?
             for attributes in layoutAttributes {
-                if closestAttribute == nil || 
+                if closestAttribute == nil ||
                     abs(attributes.center.y - proposedContentOffsetCenterY) <
                     abs(closestAttribute!.center.y - proposedContentOffsetCenterY) {
                     closestAttribute = attributes

@@ -21,7 +21,7 @@ class PexelsViewModel {
     private var hasMoreMedia: Bool = true
     
     private let mediaCache = MediaCache.shared
-
+    
     // Initial media fetch (e.g., when the view first loads)
     func fetchMedia() {
         guard !isFetching else { return }  // Prevent multiple fetches
@@ -130,6 +130,21 @@ class PexelsViewModel {
             let playerItem = AVPlayerItem(url: url)
             self.mediaCache.cacheVideo(playerItem, for: nsUrl)
         }
+    }
+    
+    // Video Management
+    func player(for video: PexelsVideo) -> AVPlayer {
+        let videoURL = URL(string: video.videoFiles.first?.link ?? "")!
+        return VideoManager.shared.player(for: videoURL)
+    }
+    
+    func cleanupPlayer(for video: PexelsVideo) {
+        let videoURL = URL(string: video.videoFiles.first?.link ?? "")!
+        VideoManager.shared.cleanupPlayer(for: videoURL)
+    }
+    
+    func pauseAllVideos() {
+        VideoManager.shared.pauseAll()
     }
 }
 

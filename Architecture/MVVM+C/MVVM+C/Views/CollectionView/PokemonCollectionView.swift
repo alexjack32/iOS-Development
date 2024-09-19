@@ -12,7 +12,9 @@ class PokemonCollectionView: UICollectionView {
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
         super.init(frame: frame, collectionViewLayout: layout)
         isPagingEnabled = true
@@ -28,7 +30,7 @@ class PokemonCollectionView: UICollectionView {
     override func performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)? = nil) {
         super.performBatchUpdates(updates) { finished in
             if finished {
-                print("Batch updates finsihed successfully.")
+                print("Batch updates finished successfully.")
             } else {
                 print("Batch updates failed.")
             }

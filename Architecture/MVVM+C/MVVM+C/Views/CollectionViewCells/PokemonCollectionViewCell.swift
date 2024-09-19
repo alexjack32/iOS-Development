@@ -47,11 +47,12 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            imageView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
+            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 150),
+            imageView.heightAnchor.constraint(equalToConstant: 150),
             
             nameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
-            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 64),
+            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 12),
             nameLabel.heightAnchor.constraint(equalToConstant: 32),
 
             numberLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor),
