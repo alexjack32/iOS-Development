@@ -4,61 +4,93 @@
 //
 //  Created by Alexander Jackson on 9/13/24.
 //
+
 import UIKit
-import AVKit
+import AVFoundation
 
-class PexelsVideoCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "PexelsVideoCollectionViewCell"
+class VideoCollectionViewCell: UICollectionViewCell {
 
-    private let imageView = UIImageView()
-    private let videoView = UIView()
+    static let reuseIdentifier = "VideoCell"
+    
     private var player: AVPlayer?
+    private var playerLayer: AVPlayerLayer?
+    private var playerStatusObserver: NSKeyValueObservation?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(imageView)
-        contentView.addSubview(videoView)
-        imageView.frame = contentView.bounds
-        videoView.frame = contentView.bounds
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        videoView.isHidden = true
+        setupPlayerLayer()
     }
-
+    
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setupPlayerLayer()
+    }
+    
+    private func setupPlayerLayer() {
+        playerLayer = AVPlayerLayer()
+        playerLayer?.videoGravity = .resizeAspectFill
+        contentView.layer.addSublayer(playerLayer!)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        playerLayer?.frame = contentView.bounds
     }
 
-//    func configure(with video: ) {
-//        if let image = video.videoPictures.first?.picture,
-//           let video = video.videoFiles.first?.link {
-//            loadImage(from: image)
-//            loadVideo(from: video)
-//        }
-//    }
+    // Configure the cell with the video URL
+    func configure(with videoURL: URL) {
+        // Clean up previous player if any
+        playerStatusObserver?.invalidate()
 
-    private func loadImage(from urlString: String) {
-        guard let url = URL(string: urlString) else { return }
-        DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: url),
-               let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self.imageView.image = image
-                }
+        // Create a new AVPlayerItem for each video playback
+        let playerItem = AVPlayerItem(url: videoURL)
+
+        // Initialize AVPlayer with the new AVPlayerItem
+        player = AVPlayer(playerItem: playerItem)
+
+        // Attach the player to the playerLayer
+        playerLayer?.player = player
+        
+        print("Setting up AVPlayer for video URL: \(videoURL)")
+
+        // Start observing player status
+        observePlayerStatus()
+
+        // Start playing the video
+        player?.play()
+    }
+
+    // Observe the player's status
+    private func observePlayerStatus() {
+        playerStatusObserver = player?.observe(\.status, options: [.new, .old], changeHandler: { [weak self] player, change in
+            guard self != nil else { return }
+            
+            switch player.status {
+            case .readyToPlay:
+                print("Player is ready to play.")
+                player.play() // Start playing if ready
+            case .failed:
+                print("Player failed to load the video: \(String(describing: player.error?.localizedDescription))")
+            case .unknown:
+                print("Player status is unknown.")
+            @unknown default:
+                break
             }
-        }
+        })
     }
 
-    private func loadVideo(from urlString: String?) {
-        guard let urlString = urlString, let url = URL(string: urlString) else { return }
-        DispatchQueue.main.async {
-            self.player = AVPlayer(url: url)
-            let playerLayer = AVPlayerLayer(player: self.player)
-            playerLayer.frame = self.videoView.bounds
-            self.videoView.layer.addSublayer(playerLayer)
-            self.player?.play()
-            self.imageView.isHidden = true
-            self.videoView.isHidden = false
-        }
+    // Clean up when the cell is reused
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        stopVideo()
+        playerLayer?.player = nil // Remove the player from the layer
+        player = nil // Clean up the player
+        playerStatusObserver?.invalidate() // Remove the observer when the cell is reused
+        playerStatusObserver = nil
+    }
+
+    func stopVideo() {
+        player?.pause()
+        player?.seek(to: .zero)
     }
 }

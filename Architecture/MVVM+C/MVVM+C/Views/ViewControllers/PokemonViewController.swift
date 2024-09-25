@@ -1,7 +1,7 @@
 //
 //  PokemonViewController.swift
 //  MVVM+C
-// vuXNgk6kYpCbuhCyh05EBHpHUUMumigHZTfx3QpyMg9onUiHGbmHmuLN
+//
 //  Created by Alexander Jackson on 9/13/24.
 //
 
@@ -10,63 +10,19 @@ import UIKit
 
 class PokemonViewController: UIViewController {
     var collectionView: PokemonCollectionView!
-    
-    var items: [Pokemon] = []
-    let networkClient = PokemonNetwork()
-    var cache: [Int: UIImage] = [:]
-    var isLoading = false
-    var hasData = true
-    private var cancellables = Set<AnyCancellable>()
-    
-    // Track ongoing image fetch requests
-    private var ongoingImageRequests: [Int: AnyCancellable] = [:]
+    var viewModel: PokemonViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = PokemonViewModel()
         collectionView = PokemonCollectionView(frame: .zero)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
         
-        loadPokemonData()
+        bindView()
+        viewModel.loadPokemonData()
     }
-    
-    func loadPokemonData() {
-            guard !isLoading, hasData else { return }
-            isLoading = true
-            
-            // Fetch the next batch of Pokémon data using Combine
-            networkClient.fetchNextPokemonList()
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: { completion in
-                    self.isLoading = false
-                    switch completion {
-                    case .failure(let error):
-                        print("Failed to fetch Pokémon list: \(error)")
-                    case .finished:
-                        break
-                    }
-                }, receiveValue: { [weak self] newPokemons in
-                    guard let self = self else { return }
-                    
-                    let startIndex = self.items.count
-                    self.items.append(contentsOf: newPokemons)
-                    
-                    // If the batch is empty, assume no more data is available
-                    if newPokemons.isEmpty {
-                        self.hasData = false
-                    }
-                    
-                    let endIndex = self.items.count
-                    let indexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
-                    
-                    // Perform batch updates to insert new data
-                    self.collectionView.performBatchUpdates({
-                        self.collectionView.insertItems(at: indexPaths)
-                    }, completion: nil)
-                })
-                .store(in: &cancellables)
-        }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -79,6 +35,29 @@ class PokemonViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
+    
+    private func bindView() {
+        viewModel.$items
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.performBatchUpdates()
+            }
+            .store(in: &viewModel.cancellables)
+    }
+    
+    private func performBatchUpdates() {
+            let itemCount = collectionView.numberOfItems(inSection: 0) // Items currently in the collection view
+            let newItemCount = viewModel.items.count // Items in the view model
+            
+            guard newItemCount > itemCount else { return } // Ensure new items were added
+            
+            let indexPaths = (itemCount..<newItemCount).map { IndexPath(item: $0, section: 0) }
+            
+            // Perform the batch updates to insert new items
+            collectionView.performBatchUpdates({
+                self.collectionView.insertItems(at: indexPaths)
+            }, completion: nil)
+        }
     
     private func scrollToCenterFirstItem(animated: Bool) {
         if collectionView.contentOffset == .zero {
@@ -93,65 +72,57 @@ extension PokemonViewController: UICollectionViewDelegate,
                                  UICollectionViewDelegateFlowLayout,
                                  UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-            if indexPaths.contains(where: { $0.item >= items.count - 5 }) {
-                loadPokemonData() // Load more data when nearing the end of the list
+        if indexPaths.contains(where: { $0.item >= viewModel.items.count - 5 }) {
+            viewModel.loadPokemonData() // Load more data when nearing the end of the list
             }
             
             for indexPath in indexPaths {
-                let pokemon = items[indexPath.item]
-                if cache[pokemon.id] == nil {
-                    let request = networkClient.fetchPokemonImage(for: pokemon.id)
+                let pokemon = viewModel.items[indexPath.item]
+                if viewModel.cache[pokemon.id] == nil {
+                    let request = viewModel.networkClient.fetchPokemonImage(for: pokemon.id)
                         .receive(on: DispatchQueue.main)
                         .sink { [weak self] image in
-                            self?.cache[pokemon.id] = image
+                            self?.viewModel.cache[pokemon.id] = image
                         }
-                    ongoingImageRequests[pokemon.id] = request
-                    request.store(in: &cancellables)
+                    viewModel.ongoingImageRequests[pokemon.id] = request
+                    request.store(in: &viewModel.cancellables)
                 }
             }
         }
 
         func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
             for indexPath in indexPaths {
-                let pokemon = items[indexPath.item]
-                if let request = ongoingImageRequests[pokemon.id] {
+                let pokemon = viewModel.items[indexPath.item]
+                if let request = viewModel.ongoingImageRequests[pokemon.id] {
                     request.cancel() // Cancel the ongoing request
-                    ongoingImageRequests.removeValue(forKey: pokemon.id) // Remove from tracking dictionary
+                    viewModel.ongoingImageRequests.removeValue(forKey: pokemon.id) // Remove from tracking dictionary
                 }
             }
         }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-           let lastItemIndex = items.count - 1
-           
-           if indexPath.item == lastItemIndex - 5 { // Load data when near the end
-               loadPokemonData()
-           }
-       }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        items.count
+        viewModel.items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCollectionViewCell.reuseIdentifier, for: indexPath) as? PokemonCollectionViewCell {
             
-            let pokemon = items[indexPath.row]
+            let pokemon = viewModel.items[indexPath.row]
             print(pokemon, pokemon.id)
             cell.configure(with: pokemon, image: nil)
             
-            if let cachedImage = cache[pokemon.id] {
+            if let cachedImage = viewModel.cache[pokemon.id] {
                 cell.configure(with: pokemon, image: cachedImage)
             } else {
-                networkClient.fetchPokemonImage(for: pokemon.id)
+                viewModel.networkClient.fetchPokemonImage(for: pokemon.id)
                     .receive(on: DispatchQueue.main)
                     .sink { [weak self] image in
                         if let self {
-                            self.cache[pokemon.id] = image
+                            self.viewModel.cache[pokemon.id] = image
                             cell.configure(with: pokemon, image: image)
                         }
                     }
-                    .store(in: &cancellables)
+                    .store(in: &viewModel.cancellables)
             }
             
             return cell

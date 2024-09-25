@@ -20,6 +20,7 @@
 		507693C92C942BEA0071A6EC /* PexelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507693C82C942BEA0071A6EC /* PexelsViewController.swift */; };
 		507693CB2C942C3F0071A6EC /* PexelsPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507693CA2C942C3F0071A6EC /* PexelsPhotoCollectionViewCell.swift */; };
 		507693CD2C942C5F0071A6EC /* PexelsVideoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507693CC2C942C5F0071A6EC /* PexelsVideoCollectionViewCell.swift */; };
+		50AE4B952C9FD4C800951B44 /* PexelsVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AE4B942C9FD4C800951B44 /* PexelsVideoViewController.swift */; };
 		50BB7C2F2C70DED3002FC184 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB7C2E2C70DED3002FC184 /* AppDelegate.swift */; };
 		50BB7C312C70DED3002FC184 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB7C302C70DED3002FC184 /* SceneDelegate.swift */; };
 		50BB7C392C70DED3002FC184 /* MVVM_C.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50BB7C372C70DED3002FC184 /* MVVM_C.xcdatamodeld */; };
@@ -34,6 +35,8 @@
 		50BB7C6D2C721F27002FC184 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB7C6C2C721F27002FC184 /* Coordinator.swift */; };
 		50BB7C752C723049002FC184 /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB7C742C723049002FC184 /* NSLayoutConstraint+Extension.swift */; };
 		50BB7C7C2C7239AD002FC184 /* UserViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB7C7B2C7239AD002FC184 /* UserViewControllerTest.swift */; };
+		50BC164D2CA438F500ED415D /* DiffableDataSourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BC164C2CA438F200ED415D /* DiffableDataSourceViewController.swift */; };
+		50BC164F2CA4395000ED415D /* DiffableViewModle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BC164E2CA4395000ED415D /* DiffableViewModle.swift */; };
 		50BE497B2C9707B6009C58DA /* PexelsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE497A2C9707B6009C58DA /* PexelsCollectionViewCell.swift */; };
 		50BE49832C98E890009C58DA /* VideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE49822C98E890009C58DA /* VideoManager.swift */; };
 /* End PBXBuildFile section */
@@ -70,6 +73,7 @@
 		507693C82C942BEA0071A6EC /* PexelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsViewController.swift; sourceTree = "<group>"; };
 		507693CA2C942C3F0071A6EC /* PexelsPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		507693CC2C942C5F0071A6EC /* PexelsVideoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsVideoCollectionViewCell.swift; sourceTree = "<group>"; };
+		50AE4B942C9FD4C800951B44 /* PexelsVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsVideoViewController.swift; sourceTree = "<group>"; };
 		50BB7C2B2C70DED3002FC184 /* MVVM+C.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MVVM+C.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50BB7C2E2C70DED3002FC184 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50BB7C302C70DED3002FC184 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +92,8 @@
 		50BB7C6C2C721F27002FC184 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		50BB7C742C723049002FC184 /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
 		50BB7C7B2C7239AD002FC184 /* UserViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewControllerTest.swift; sourceTree = "<group>"; };
+		50BC164C2CA438F200ED415D /* DiffableDataSourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffableDataSourceViewController.swift; sourceTree = "<group>"; };
+		50BC164E2CA4395000ED415D /* DiffableViewModle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffableViewModle.swift; sourceTree = "<group>"; };
 		50BE497A2C9707B6009C58DA /* PexelsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsCollectionViewCell.swift; sourceTree = "<group>"; };
 		50BE49822C98E890009C58DA /* VideoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,9 +138,11 @@
 		5029CEA72C7FFBD9008E5F42 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				50BC164C2CA438F200ED415D /* DiffableDataSourceViewController.swift */,
 				5029CEA82C800093008E5F42 /* HomeViewController.swift */,
 				507693BB2C9403EF0071A6EC /* PokemonViewController.swift */,
 				507693C82C942BEA0071A6EC /* PexelsViewController.swift */,
+				50AE4B942C9FD4C800951B44 /* PexelsVideoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -246,6 +254,7 @@
 			children = (
 				50BB7C672C70E00E002FC184 /* ViewModel.swift */,
 				507693C62C942BBA0071A6EC /* PexelsViewModel.swift */,
+				50BC164E2CA4395000ED415D /* DiffableViewModle.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -452,6 +461,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				50BB7C6D2C721F27002FC184 /* Coordinator.swift in Sources */,
+				50AE4B952C9FD4C800951B44 /* PexelsVideoViewController.swift in Sources */,
+				50BC164F2CA4395000ED415D /* DiffableViewModle.swift in Sources */,
 				507693C92C942BEA0071A6EC /* PexelsViewController.swift in Sources */,
 				507693BE2C94085C0071A6EC /* PokemonModel.swift in Sources */,
 				507693CB2C942C3F0071A6EC /* PexelsPhotoCollectionViewCell.swift in Sources */,
@@ -468,6 +479,7 @@
 				50BB7C312C70DED3002FC184 /* SceneDelegate.swift in Sources */,
 				507693C12C9409FA0071A6EC /* PokemonNetwork.swift in Sources */,
 				50BB7C682C70E00E002FC184 /* ViewModel.swift in Sources */,
+				50BC164D2CA438F500ED415D /* DiffableDataSourceViewController.swift in Sources */,
 				50BB7C752C723049002FC184 /* NSLayoutConstraint+Extension.swift in Sources */,
 				507693C72C942BBA0071A6EC /* PexelsViewModel.swift in Sources */,
 				507693CD2C942C5F0071A6EC /* PexelsVideoCollectionViewCell.swift in Sources */,

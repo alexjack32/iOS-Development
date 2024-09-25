@@ -39,7 +39,9 @@ class HomeViewController: UIViewController {
     let displayView = BaseView()
     let items: [HomeViewModel] = [
         HomeViewModel(text: "Pokemon", viewController: PokemonViewController()),
-        HomeViewModel(text: "Pexels", viewController: PexelsViewController())
+        HomeViewModel(text: "Pexels", viewController: PexelsViewController()),
+        HomeViewModel(text: "Pexels Videos", viewController: PexelsVideoViewController()),
+        HomeViewModel(text: "Diffable Data Source", viewController: DiffableDataSourceViewController())
     ]
     
     init() {

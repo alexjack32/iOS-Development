@@ -7,69 +7,61 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "94883B31-48F9-477D-83A1-89D2769E7FEC"
-            shouldBeEnabled = "No"
+            uuid = "0B99216A-0FF7-4E87-8EB2-F916A7B729BD"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PokemonViewController.swift"
+            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PexelsVideoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
-            landmarkName = "collectionView(_:prefetchItemsAt:)"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E47EEE96-88FD-43B9-BE68-1BFACA45D3E1"
+            uuid = "89247EC9-12AD-4192-B03D-7B44398C2E45"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
-            continueAfterRunningActions = "Yes"
-            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PokemonViewController.swift"
+            continueAfterRunningActions = "No"
+            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PexelsVideoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "collectionView(_:prefetchItemsAt:)"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
+            landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
-            <Actions>
-               <BreakpointActionProxy
-                  ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
-                  <ActionContent
-                     consoleCommand = "expr -l Swift -- print(indexPaths, &quot;&lt;&gt;&lt;&quot;)">
-                  </ActionContent>
-               </BreakpointActionProxy>
-            </Actions>
             <Locations>
                <Location
-                  uuid = "E47EEE96-88FD-43B9-BE68-1BFACA45D3E1 - 6d7a21ce54a54636"
+                  uuid = "89247EC9-12AD-4192-B03D-7B44398C2E45 - a0373ce630af57c7"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "MVVM_C.PokemonViewController.collectionView(_: __C.UICollectionView, prefetchItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;) -&gt; ()"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Foundation.URL) -&gt; () in MVVM_C.PexelsVideoViewController.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
                   moduleName = "MVVM+C.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/leaveittolou/Documents/Work/App%20Development/DevelopmentPlayground/Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PokemonViewController.swift"
+                  urlString = "file:///Users/leaveittolou/Documents/Work/App%20Development/DevelopmentPlayground/Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PexelsVideoViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "100"
-                  endingLineNumber = "100">
+                  startingLineNumber = "116"
+                  endingLineNumber = "116">
                </Location>
                <Location
-                  uuid = "E47EEE96-88FD-43B9-BE68-1BFACA45D3E1 - 6d7a21ce54a54636"
+                  uuid = "89247EC9-12AD-4192-B03D-7B44398C2E45 - a0373ce630af57c7"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "MVVM_C.PokemonViewController.collectionView(_: __C.UICollectionView, prefetchItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;) -&gt; ()"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Foundation.URL) -&gt; () in MVVM_C.PexelsVideoViewController.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
                   moduleName = "MVVM+C.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/leaveittolou/Documents/Work/App%20Development/DevelopmentPlayground/Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PokemonViewController.swift"
+                  urlString = "file:///Users/leaveittolou/Documents/Work/App%20Development/DevelopmentPlayground/Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PexelsVideoViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "100"
-                  endingLineNumber = "100">
+                  startingLineNumber = "116"
+                  endingLineNumber = "116">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -77,57 +69,65 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7495184A-3DC5-4DB7-821C-F9CD1D562533"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "Yes"
-            filePath = "Architecture/MVVM+C/MVVM+C/Network/PokemonNetwork.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "fetchPokemonList(offset:limit:)"
-            landmarkType = "7">
-            <Actions>
-               <BreakpointActionProxy
-                  ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
-                  <ActionContent
-                     consoleCommand = "expr -l Swift -- print(offset, &quot;&lt;&gt;&lt;&quot;)">
-                  </ActionContent>
-               </BreakpointActionProxy>
-            </Actions>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "510F837E-558D-4947-B1AB-9599C63F5A76"
+            uuid = "19A2E2DE-7356-4524-B06E-893F8FB138B3"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PokemonViewController.swift"
+            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PexelsVideoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "loadPokemonData()"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
+            landmarkName = "collectionView(_:prefetchItemsAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DB28E207-B819-4301-86F6-52D1A48609D5"
+            uuid = "D8465BA2-71BF-4495-A2D4-AF719297DB53"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Architecture/MVVM+C/MVVM+C/Network/PokemonNetwork.swift"
+            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PexelsVideoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "fetchPokemonList(offset:limit:)"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "startDownload(for:indexPath:completion:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8BFDA600-B4A9-4896-8D23-84488DA1A693"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/DiffableDataSourceViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "bindViewModel()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B0FE8192-A4D8-4538-A5E4-0A706D40F3A4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/DiffableDataSourceViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "6"
+            endingLineNumber = "6"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
