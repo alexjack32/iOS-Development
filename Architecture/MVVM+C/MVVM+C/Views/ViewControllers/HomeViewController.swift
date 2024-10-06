@@ -41,7 +41,8 @@ class HomeViewController: UIViewController {
         HomeViewModel(text: "Pokemon", viewController: PokemonViewController()),
         HomeViewModel(text: "Pexels", viewController: PexelsViewController()),
         HomeViewModel(text: "Pexels Videos", viewController: PexelsVideoViewController()),
-        HomeViewModel(text: "Diffable Data Source", viewController: DiffableDataSourceViewController())
+        HomeViewModel(text: "Diffable Data Source", viewController: DiffableDataSourceViewController()),
+        HomeViewModel(text: "Content Insets", viewController: ContentInsetsViewController())
     ]
     
     init() {

@@ -25,16 +25,11 @@ class DiffableViewModel {
     init() {
         // Listen to changes in sectionData and send snapshot when data changes
         $sectionData
-//            .filter { !$0.isEmpty } // Optional: Ensure you're only working with non-empty arrays
-//                       .removeDuplicates(by: { previous, current in
-//                           // Return true if you want to remove the current value
-//                           return previous.id == current.id
-//                       })
-                       .sink { [weak self] updatedData in
-                           print("Filtered Section data: \(updatedData.count) items")  // Debugging
-                           self?.sendSnapshot(with: updatedData)
-                       }
-                       .store(in: &cancellables)
+            .sink { [weak self] updatedData in
+                print("Filtered Section data: \(updatedData.count) items")  // Debugging
+                self?.sendSnapshot(with: updatedData)
+            }
+            .store(in: &cancellables)
     }
     
     // Populate with MyCustomModel data types
