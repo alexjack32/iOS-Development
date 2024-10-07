@@ -7,6 +7,8 @@
 
 import UIKit
 
+import UIKit
+
 class LargerTouchAreaSlider: UISlider {
     
     // Define the touch area insets (negative values to expand the area)
@@ -56,16 +58,41 @@ class LargerTouchAreaSlider: UISlider {
         // Get the location of the touch in the slider's coordinate space
         let touchLocation = touch.location(in: self)
         
-        // Calculate the equivalent slider value based on the touch location
+        // Check if the user tapped directly on the thumb, allow the default drag behavior
+        let thumbFrame = thumbRect(forBounds: bounds, trackRect: trackRect(forBounds: bounds), value: value)
+        if thumbFrame.contains(touchLocation) {
+            // Let the default dragging behavior proceed
+            return
+        }
+        
+        // If the tap is not directly on the thumb, calculate the equivalent slider value
         let percentage = touchLocation.x / bounds.width
         let delta = maximumValue - minimumValue
         let newValue = delta * Float(percentage) + minimumValue
         
-        // Set the slider's value to the new value
+        // Set the slider's value to the new value (move the thumb)
         setValue(newValue, animated: true)
         
         // Trigger the value change action
         sendActions(for: .valueChanged)
+        
+        // Begin tracking for dragging after tapping
+        beginTracking(touch, with: event)
+    }
+    
+    // Continue dragging after the initial tap
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        guard let touch = touches.first else { return }
+        
+        // Allow dragging behavior to update the slider value
+        continueTracking(touch, with: event)
+    }
+    
+    // End tracking
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        endTracking(touches.first, with: event)
     }
 }
 class SwitchContainerView: UIView {
