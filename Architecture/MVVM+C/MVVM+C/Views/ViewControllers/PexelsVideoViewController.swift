@@ -31,6 +31,7 @@ class PexelsVideoViewController: UIViewController, UICollectionViewDelegate, UIC
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: false)
         setupCollectionView()
         fetchVideos(page: currentPage)
     }

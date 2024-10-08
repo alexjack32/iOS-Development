@@ -6,68 +6,8 @@
 //
 
 import UIKit
+import DD4Y_UIKit
 
-class LargerTouchAreaSlider: UISlider {
-    
-    // Define the touch area insets (negative values to expand the area)
-    var touchAreaInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
-    
-    // Override layoutSubviews to add visual debugging
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        // Remove any existing layers that may stack up from previous calls
-        self.layer.sublayers?.removeAll { $0 is CAShapeLayer }
-        
-        // Add a border to the slider to visualize its original size
-        self.layer.borderColor = UIColor.red.cgColor
-        self.layer.borderWidth = 1
-        
-        // Create a layer to visualize the expanded touch area
-        let touchableAreaLayer = CAShapeLayer()
-        let touchableAreaFrame = bounds.inset(by: touchAreaInsets)
-        touchableAreaLayer.frame = touchableAreaFrame
-        touchableAreaLayer.borderColor = UIColor.green.cgColor
-        touchableAreaLayer.borderWidth = 1
-        touchableAreaLayer.backgroundColor = UIColor.clear.cgColor
-        
-        // Add the touchable area layer for debugging
-        self.layer.addSublayer(touchableAreaLayer)
-    }
-    
-    // Override point(inside:with:) to adjust the touch area
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        let largerBounds = bounds.inset(by: touchAreaInsets)
-        return largerBounds.contains(point)
-    }
-    
-    // Override hitTest to allow touches in expanded area to register with the control
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let largerBounds = bounds.inset(by: touchAreaInsets)
-        return largerBounds.contains(point) ? self : nil
-    }
-    
-    // Override touchesBegan to recognize taps anywhere along the track
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        
-        guard let touch = touches.first else { return }
-        
-        // Get the location of the touch in the slider's coordinate space
-        let touchLocation = touch.location(in: self)
-        
-        // Calculate the equivalent slider value based on the touch location
-        let percentage = touchLocation.x / bounds.width
-        let delta = maximumValue - minimumValue
-        let newValue = delta * Float(percentage) + minimumValue
-        
-        // Set the slider's value to the new value
-        setValue(newValue, animated: true)
-        
-        // Trigger the value change action
-        sendActions(for: .valueChanged)
-    }
-}
 class SwitchContainerView: UIView {
     
     var touchAreaInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
@@ -171,8 +111,8 @@ class ContentInsetsViewController: UIViewController {
     }()
     
     // Create UISlider using custom class
-    let largerTouchSlider: LargerTouchAreaSlider = {
-        let slider = LargerTouchAreaSlider()
+    let largerTouchSlider: BaseSlider = {
+        let slider = BaseSlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
     }()

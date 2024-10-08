@@ -140,6 +140,7 @@
 		5029CEA72C7FFBD9008E5F42 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				50BF17D32CB2229700D52D3E /* ContentInsetsViewController.swift */,
 				50BC164C2CA438F200ED415D /* DiffableDataSourceViewController.swift */,
 				5029CEA82C800093008E5F42 /* HomeViewController.swift */,
 				507693BB2C9403EF0071A6EC /* PokemonViewController.swift */,
@@ -257,7 +258,6 @@
 				50BB7C672C70E00E002FC184 /* ViewModel.swift */,
 				507693C62C942BBA0071A6EC /* PexelsViewModel.swift */,
 				50BC164E2CA4395000ED415D /* DiffableViewModle.swift */,
-				50BF17D32CB2229700D52D3E /* ContentInsetsViewController.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
