@@ -38,11 +38,22 @@ class HomeViewController: UIViewController {
     let tableView: UITableView
     let displayView = BaseView()
     let items: [HomeViewModel] = [
-        HomeViewModel(text: "Pokemon", viewController: PokemonViewController()),
-        HomeViewModel(text: "Pexels", viewController: PexelsViewController()),
-        HomeViewModel(text: "Pexels Videos", viewController: PexelsVideoViewController()),
-        HomeViewModel(text: "Diffable Data Source", viewController: DiffableDataSourceViewController()),
-        HomeViewModel(text: "Content Insets", viewController: ContentInsetsViewController())
+        HomeViewModel(text: "Pokemon", viewController: PokemonViewController()
+                     ),
+        HomeViewModel(text: "Pexels", viewController: PexelsViewController()
+                     ),
+        HomeViewModel(text: "Pexels Videos", viewController: PexelsVideoViewController()
+                     ),
+        HomeViewModel(text: "Diffable Data Source", viewController: DiffableDataSourceViewController()
+                     ),
+        HomeViewModel(text: "Content Insets", viewController: ContentInsetsViewController()
+                     ),
+        HomeViewModel(text: "Trending",
+                      viewController: TrendViewController()
+                     ),
+        HomeViewModel(text: "Tagging",
+                      viewController: TaggingViewController()
+                     )
     ]
     
     init() {

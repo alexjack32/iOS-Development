@@ -15,6 +15,9 @@
       location = "group:CustomUI"
       name = "CustomUI">
       <FileRef
+         location = "group:DD4Y+SwiftUI/DD4Y+SwiftUI.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:DD4Y+UIKit/DD4Y+UIKit.xcodeproj">
       </FileRef>
    </Group>

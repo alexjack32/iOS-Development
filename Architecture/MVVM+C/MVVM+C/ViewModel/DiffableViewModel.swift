@@ -9,9 +9,6 @@ import Foundation
 import Combine
 import UIKit
 
-import Foundation
-import Combine
-
 class DiffableViewModel {
     
     // Use a 1D array instead of a 2D array

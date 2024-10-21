@@ -1,0 +1,16 @@
+[
+    {
+        "imagePath": "/Users/leaveittolou/Downloads/Nike-Image-Test_0000_Layer 2.jpg",
+        "buttons": [
+            { "x" : 0.4932170808315277, "y" : 0.5814954042434692 },
+            { "x" : 0.4273192584514618, "y" : 0.5865367650985718 }
+        ]
+    },
+    {
+        "imagePath": "/Users/leaveittolou/Downloads/Nike-Image-Test_0001_Layer 1.jpg",
+        "buttons": [
+            { "x" : 0.4932170808315277, "y" : 0.5814954042434692 },
+            { "x" : 0.4273192584514618, "y" : 0.5865367650985718 }
+        ]
+    }
+]
