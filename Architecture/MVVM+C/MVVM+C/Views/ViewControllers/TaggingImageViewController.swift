@@ -25,7 +25,7 @@ class TaggingImageViewController: UIViewController {
         
         // Create and display the image view
         let imageView = UIImageView(frame: view.bounds)
-        if let image = UIImage(contentsOfFile: imageData.imagePath) {
+        if let image = UIImage(named: imageData.imagePath) {
             imageView.image = image
         }
         imageView.contentMode = .scaleAspectFit

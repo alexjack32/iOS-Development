@@ -40,9 +40,6 @@
 		50BE497B2C9707B6009C58DA /* PexelsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE497A2C9707B6009C58DA /* PexelsCollectionViewCell.swift */; };
 		50BE49832C98E890009C58DA /* VideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE49822C98E890009C58DA /* VideoManager.swift */; };
 		50BF17D42CB2229700D52D3E /* ContentInsetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF17D32CB2229700D52D3E /* ContentInsetsViewController.swift */; };
-		50CB86EE2CC4FD8400C1971E /* Test.json in Resources */ = {isa = PBXBuildFile; fileRef = 50CB86ED2CC4FD8400C1971E /* Test.json */; };
-		50CB86F02CC4FE7500C1971E /* WalmartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB86EF2CC4FE7500C1971E /* WalmartModel.swift */; };
-		50CB86F22CC557A400C1971E /* TrendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB86F12CC557A400C1971E /* TrendViewController.swift */; };
 		50CB86F42CC6758C00C1971E /* TaggingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB86F32CC6758C00C1971E /* TaggingViewController.swift */; };
 		50CB86F62CC6790200C1971E /* Tagging.json in Resources */ = {isa = PBXBuildFile; fileRef = 50CB86F52CC6790200C1971E /* Tagging.json */; };
 		50CB86F82CC67CB100C1971E /* TaggingImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB86F72CC67CB100C1971E /* TaggingImageViewController.swift */; };
@@ -104,9 +101,6 @@
 		50BE497A2C9707B6009C58DA /* PexelsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsCollectionViewCell.swift; sourceTree = "<group>"; };
 		50BE49822C98E890009C58DA /* VideoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoManager.swift; sourceTree = "<group>"; };
 		50BF17D32CB2229700D52D3E /* ContentInsetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentInsetsViewController.swift; sourceTree = "<group>"; };
-		50CB86ED2CC4FD8400C1971E /* Test.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Test.json; sourceTree = "<group>"; };
-		50CB86EF2CC4FE7500C1971E /* WalmartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalmartModel.swift; sourceTree = "<group>"; };
-		50CB86F12CC557A400C1971E /* TrendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendViewController.swift; sourceTree = "<group>"; };
 		50CB86F32CC6758C00C1971E /* TaggingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggingViewController.swift; sourceTree = "<group>"; };
 		50CB86F52CC6790200C1971E /* Tagging.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Tagging.json; sourceTree = "<group>"; };
 		50CB86F72CC67CB100C1971E /* TaggingImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggingImageViewController.swift; sourceTree = "<group>"; };
@@ -158,7 +152,6 @@
 				507693BB2C9403EF0071A6EC /* PokemonViewController.swift */,
 				507693C82C942BEA0071A6EC /* PexelsViewController.swift */,
 				50AE4B942C9FD4C800951B44 /* PexelsVideoViewController.swift */,
-				50CB86F12CC557A400C1971E /* TrendViewController.swift */,
 				50CB86F32CC6758C00C1971E /* TaggingViewController.swift */,
 				50CB86F72CC67CB100C1971E /* TaggingImageViewController.swift */,
 			);
@@ -264,7 +257,6 @@
 				50BB7C652C70DFE6002FC184 /* Model.swift */,
 				507693BD2C94085C0071A6EC /* PokemonModel.swift */,
 				507693C42C9427A70071A6EC /* PexelsModel.swift */,
-				50CB86EF2CC4FE7500C1971E /* WalmartModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -347,7 +339,6 @@
 		50CB86EC2CC4FD6400C1971E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				50CB86ED2CC4FD8400C1971E /* Test.json */,
 				50CB86F52CC6790200C1971E /* Tagging.json */,
 			);
 			path = Resources;
@@ -463,7 +454,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50CB86EE2CC4FD8400C1971E /* Test.json in Resources */,
 				50CB86F62CC6790200C1971E /* Tagging.json in Resources */,
 				50BB7C3B2C70DED5002FC184 /* Assets.xcassets in Resources */,
 				50BB7C3E2C70DED5002FC184 /* Base in Resources */,
@@ -495,11 +485,9 @@
 				50AE4B952C9FD4C800951B44 /* PexelsVideoViewController.swift in Sources */,
 				50BC164F2CA4395000ED415D /* DiffableViewModel.swift in Sources */,
 				507693C92C942BEA0071A6EC /* PexelsViewController.swift in Sources */,
-				50CB86F22CC557A400C1971E /* TrendViewController.swift in Sources */,
 				507693BE2C94085C0071A6EC /* PokemonModel.swift in Sources */,
 				507693CB2C942C3F0071A6EC /* PexelsPhotoCollectionViewCell.swift in Sources */,
 				50BB7C662C70DFE6002FC184 /* Model.swift in Sources */,
-				50CB86F02CC4FE7500C1971E /* WalmartModel.swift in Sources */,
 				507693BC2C9403EF0071A6EC /* PokemonViewController.swift in Sources */,
 				5029CF112C9331F6008E5F42 /* PokemonCollectionViewCell.swift in Sources */,
 				50BE49832C98E890009C58DA /* VideoManager.swift in Sources */,

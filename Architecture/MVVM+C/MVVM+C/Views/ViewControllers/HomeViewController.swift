@@ -48,9 +48,6 @@ class HomeViewController: UIViewController {
                      ),
         HomeViewModel(text: "Content Insets", viewController: ContentInsetsViewController()
                      ),
-        HomeViewModel(text: "Trending",
-                      viewController: TrendViewController()
-                     ),
         HomeViewModel(text: "Tagging",
                       viewController: TaggingViewController()
                      )
