@@ -8,6 +8,7 @@
 import UIKit
 
 struct ImageData: Codable {
+    let originalImagePath: String
     let imagePath: String
     let buttons: [ButtonData]
 }
@@ -72,7 +73,7 @@ class TaggingViewController: UIViewController {
     func loadExampleData() {
         // Now we just handle the successfully fetched and decoded data
         guard let jsonData = fetchExampleData() else { return }
-        print("Decoded data: \(jsonData)")
+//        print("Decoded data: \(jsonData)")
         imageArray = jsonData
     }
 }
@@ -94,6 +95,10 @@ extension TaggingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = imageArray[indexPath.row]
-        present(TaggingImageViewController(imageData: data), animated: true, completion: nil)
+        if indexPath.row == 0 {
+            present(TaggingImageViewController(imageData: data, cropType: .none), animated: true, completion: nil)
+        } else {
+            present(TaggingImageViewController(imageData: data, cropType: .top), animated: true, completion: nil)
+        }
     }
 }

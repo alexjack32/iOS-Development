@@ -12,6 +12,8 @@ class PokemonCollectionViewCell: UICollectionViewCell {
     let imageView = UIImageView()
     let nameLabel = UILabel()
     let numberLabel = UILabel()
+    private var imageViewWidthConstraint: NSLayoutConstraint!
+    private var imageViewHeightConstraint: NSLayoutConstraint!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,11 +47,16 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         numberLabel.textColor = .black
         numberLabel.numberOfLines = 1
         
+        // Initial constraints for the image view
+            imageViewWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 300)
+            imageViewHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 300)
+            
+        
         NSLayoutConstraint.activate([
             imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: 150),
-            imageView.heightAnchor.constraint(equalToConstant: 150),
+            imageViewWidthConstraint,
+            imageViewHeightConstraint,
             
             nameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
             nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 12),
@@ -60,10 +67,22 @@ class PokemonCollectionViewCell: UICollectionViewCell {
             numberLabel.heightAnchor.constraint(equalToConstant: 32)
             
         ])
+        print("LayoutSubviews \(self.hashValue) <><")
+        setNeedsUpdateConstraints()
     }
     
-
-    
+    override func updateConstraints() {
+        super.updateConstraints()
+        if UIDevice.current.orientation.isPortrait {
+            imageViewWidthConstraint.constant = 300
+            imageViewHeightConstraint.constant = 300
+        } else {
+            imageViewWidthConstraint.constant = 500
+            imageViewHeightConstraint.constant = 500
+        }
+        print("Update constraints <><")
+    }
+        
     private func setupView() {
     }
     

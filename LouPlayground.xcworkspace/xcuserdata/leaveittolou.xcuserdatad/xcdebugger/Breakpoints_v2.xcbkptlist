@@ -7,127 +7,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0B99216A-0FF7-4E87-8EB2-F916A7B729BD"
+            uuid = "4E48A1E6-0A70-4A20-A0E0-279FEE4E45A6"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PexelsVideoViewController.swift"
+            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/TaggingImageViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "topCropRatio(pixels:from:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "89247EC9-12AD-4192-B03D-7B44398C2E45"
+            uuid = "2074433B-A1C0-4AC4-B3CC-1CAB9AFDFE8A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PexelsVideoViewController.swift"
+            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/LoadingCellViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "loadMoreData()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "89247EC9-12AD-4192-B03D-7B44398C2E45 - a0373ce630af5620"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Foundation.URL) -&gt; () in MVVM_C.PexelsVideoViewController.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
-                  moduleName = "MVVM+C.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/leaveittolou/Documents/Work/App%20Development/DevelopmentPlayground/Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PexelsVideoViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "117"
-                  endingLineNumber = "117">
-               </Location>
-               <Location
-                  uuid = "89247EC9-12AD-4192-B03D-7B44398C2E45 - a0373ce630af5620"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Foundation.URL) -&gt; () in MVVM_C.PexelsVideoViewController.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
-                  moduleName = "MVVM+C.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/leaveittolou/Documents/Work/App%20Development/DevelopmentPlayground/Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PexelsVideoViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "117"
-                  endingLineNumber = "117">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "19A2E2DE-7356-4524-B06E-893F8FB138B3"
+            uuid = "BA110D6D-1D92-47EF-943E-17809FC38847"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PexelsVideoViewController.swift"
+            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/LoadingCellViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
             landmarkName = "collectionView(_:prefetchItemsAt:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D8465BA2-71BF-4495-A2D4-AF719297DB53"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/PexelsVideoViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
-            landmarkName = "startDownload(for:indexPath:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8BFDA600-B4A9-4896-8D23-84488DA1A693"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/DiffableDataSourceViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "bindViewModel()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B0FE8192-A4D8-4538-A5E4-0A706D40F3A4"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/DiffableDataSourceViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "6"
-            endingLineNumber = "6"
-            landmarkName = "unknown"
-            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

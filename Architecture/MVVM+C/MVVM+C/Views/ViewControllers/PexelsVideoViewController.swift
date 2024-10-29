@@ -15,6 +15,10 @@ protocol VideoDownloadDelegate: AnyObject {
 
 class PexelsVideoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     
+    
+    // Store the trait change registration token
+    private var traitRegistrationToken: UITraitChangeRegistration?
+    
     private var collectionView: UICollectionView!
     private var cancellables = Set<AnyCancellable>()
     private var videoURLs: [URL] = []
@@ -32,9 +36,18 @@ class PexelsVideoViewController: UIViewController, UICollectionViewDelegate, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
-        setupCollectionView()
-        fetchVideos(page: currentPage)
+//        setupCollectionView()
+//        fetchVideos(page: currentPage)
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+           super.viewWillDisappear(animated)
+
+           // Unregister trait changes before the view disappears, to avoid capturing `self` in deinit
+           if let token = traitRegistrationToken {
+               unregisterForTraitChanges(token)
+           }
+       }
     
     private func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
@@ -48,91 +61,112 @@ class PexelsVideoViewController: UIViewController, UICollectionViewDelegate, UIC
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self // Register prefetching data source
         collectionView.register(VideoCollectionViewCell.self, forCellWithReuseIdentifier: VideoCollectionViewCell.reuseIdentifier)
-        
-        view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
+        collectionView.register(IndicatorCell.self, forCellWithReuseIdentifier: IndicatorCell.reuseIdentifier)
+//        view.addSubview(collectionView)
+//        collectionView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+//            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+//        ])
     }
     
-    private func fetchVideos(page: Int) {
-        guard !isLoading else { return } // Prevent multiple simultaneous requests
+    func fetchVideos(page: Int) {
+        guard !isLoading else { return }
         isLoading = true
-        
-        PexelsNetwork.shared.request(endpoint: .videos(page: page, perPage: itemsPerPage)) { [weak self] (result: Result<PexelsItem<PexelsVideo>, Error>) in
-            guard let self = self else { return }
-            
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let pexelsItem):
-                    let newVideos = pexelsItem.items.compactMap { $0.videoFiles.first?.link }
-                    let urls = newVideos.compactMap { URL(string: $0) }
-                    self.videoURLs.append(contentsOf: urls)
-                    self.collectionView.reloadData()
-                    self.totalItems = pexelsItem.items.count
-                    
-                case .failure(let error):
-                    print("Error fetching videos: \(error.localizedDescription)")
-                }
+
+        // Step 1: Show the loading cell
+        collectionView.performBatchUpdates({
+            self.collectionView.reloadData() // This ensures the loading cell appears
+        }, completion: nil)
+
+        // Simulate network fetch delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            // Step 2: Simulate data fetching
+            let newVideos = (0..<self.itemsPerPage).map { URL(string: "https://example.com/video\($0)")! }
+            let initialCount = self.videoURLs.count
+
+            // Step 3: Append the fetched data
+            self.videoURLs.append(contentsOf: newVideos)
+
+            // Step 4: Perform batch updates to insert new items
+            self.collectionView.performBatchUpdates({
+                let indexPaths = (initialCount..<self.videoURLs.count).map { IndexPath(item: $0, section: 0) }
+                self.collectionView.insertItems(at: indexPaths)
+            }, completion: { _ in
+                // Step 5: Remove the loading cell after appending
                 self.isLoading = false
-            }
+                self.collectionView.reloadData() // Reload to hide the loading cell
+            })
         }
     }
-    
+
     // UICollectionView DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return videoURLs.count
+        //return videoURLs.count
+        //// Add 1 extra cell for loading indicator when loading is true
+        return videoURLs.count + (isLoading ? 1 : 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoCollectionViewCell.reuseIdentifier, for: indexPath) as! VideoCollectionViewCell
-        let videoURL = videoURLs[indexPath.item]
-        
-        // Log the current index and check if the cell is being dequeued correctly
-        print("Configuring cell for index \(indexPath.item) with video URL: \(videoURL)")
-        
-        // Check if the video file URL is cached in NSCache
-        if let cachedVideoURL = videoCache.object(forKey: videoURL as NSURL) as URL? {
-            print("Using cached video file URL for index \(indexPath.item): \(cachedVideoURL)")
-            // Configure the cell with the cached video URL
-            cell.configure(with: cachedVideoURL)
+        if indexPath.row == videoURLs.count {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IndicatorCell.reuseIdentifier, for: indexPath) as! IndicatorCell
+            cell.indicator.startAnimating()
+            print("loading cell <><")
+            return cell
         } else {
-            // If the video is not cached, initiate the download
-            print("Starting download for index \(indexPath.item) with video URL: \(videoURL)")
-            startDownload(for: videoURL, indexPath: indexPath) { [weak self] downloadedURL in
-                guard let self = self else { return }
-                
-                // Cache the downloaded video URL
-                self.videoCache.setObject(downloadedURL as NSURL, forKey: videoURL as NSURL)
-                
-                // Log after the video is downloaded and cached
-                print("Downloaded and cached video for index \(indexPath.item): \(downloadedURL)")
-                
-                // Check if the cell is still visible and update it directly
-                DispatchQueue.main.async {
-                    if let visibleCell = collectionView.cellForItem(at: indexPath) as? VideoCollectionViewCell {
-                        print("Updating visible cell for index \(indexPath.item)")
-                        visibleCell.configure(with: downloadedURL)
-                    }
-                }
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoCollectionViewCell.reuseIdentifier, for: indexPath) as! VideoCollectionViewCell
+            let videoURL = videoURLs[indexPath.item]
+            
+            // Log the current index and check if the cell is being dequeued correctly
+            print("Configuring cell for index \(indexPath.item) with video URL: \(videoURL)")
+            
+            // Check if the video file URL is cached in NSCache
+            if let cachedVideoURL = videoCache.object(forKey: videoURL as NSURL) as URL? {
+                print("Using cached video file URL for index \(indexPath.item): \(cachedVideoURL)")
+                // Configure the cell with the cached video URL
+                cell.configure(with: cachedVideoURL)
+            } else {
+                // If the video is not cached, initiate the download
+                print("Starting download for index \(indexPath.item) with video URL: \(videoURL)")
+//                startDownload(for: videoURL, indexPath: indexPath) { [weak self] downloadedURL in
+//                    guard let self = self else { return }
+//                    
+//                    // Cache the downloaded video URL
+//                    self.videoCache.setObject(downloadedURL as NSURL, forKey: videoURL as NSURL)
+//                    
+//                    // Log after the video is downloaded and cached
+//                    print("Downloaded and cached video for index \(indexPath.item): \(downloadedURL)")
+//                    
+//                    // Check if the cell is still visible and update it directly
+//                    DispatchQueue.main.async {
+//                        if let visibleCell = collectionView.cellForItem(at: indexPath) as? VideoCollectionViewCell {
+//                            print("Updating visible cell for index \(indexPath.item)")
+//                            visibleCell.configure(with: downloadedURL)
+//                        }
+//                    }
+//                }
             }
+            
+            return cell
         }
-
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let videoURL = videoURLs[indexPath.item]
-        
-        // If the video has been cached, configure the cell with the video URL
-        if let cachedVideoURL = videoCache.object(forKey: videoURL as NSURL) as URL? {
-            if let videoCell = cell as? VideoCollectionViewCell {
-                print("Configuring video for index \(indexPath.item) in willDisplay")
-                videoCell.configure(with: cachedVideoURL)
+        // Check if the cell is the loading indicator
+        if indexPath.row == videoURLs.count && isLoading {
+            let nextPage = (videoURLs.count / itemsPerPage) + 1
+            fetchVideos(page: nextPage) // Trigger next page load
+        } else if indexPath.item < videoURLs.count { // Ensure the index is within bounds
+            // Handle video caching for regular cells
+            let videoURL = videoURLs[indexPath.item]
+
+            if let cachedVideoURL = videoCache.object(forKey: videoURL as NSURL) as URL? {
+                if let videoCell = cell as? VideoCollectionViewCell {
+                    print("Configuring video for index \(indexPath.item) in willDisplay")
+                    videoCell.configure(with: cachedVideoURL)
+                }
             }
         }
     }
@@ -157,10 +191,10 @@ class PexelsVideoViewController: UIViewController, UICollectionViewDelegate, UIC
             
             // If the video is not already cached, start downloading it
             if videoCache.object(forKey: videoURL as NSURL) == nil {
-                startDownload(for: videoURL, indexPath: indexPath) { [weak self] downloadedURL in
-                    guard let self = self else { return }
-                    self.videoCache.setObject(downloadedURL as NSURL, forKey: videoURL as NSURL)
-                }
+//                startDownload(for: videoURL, indexPath: indexPath) { [weak self] downloadedURL in
+//                    guard let self = self else { return }
+//                    self.videoCache.setObject(downloadedURL as NSURL, forKey: videoURL as NSURL)
+//                }
             }
         }
     }
@@ -222,6 +256,13 @@ class PexelsVideoViewController: UIViewController, UICollectionViewDelegate, UIC
             self.downloadTasks[videoURL] = task
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let size = collectionView.frame.size
+        let cellHeight = (indexPath.row == videoURLs.count && isLoading) ? 40 : (size.height / 3) // Adjust height for indicator
+        return CGSize(width: size.width, height: cellHeight)
+    }
+
 }
 
 

@@ -20,6 +20,8 @@
 		507693C92C942BEA0071A6EC /* PexelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507693C82C942BEA0071A6EC /* PexelsViewController.swift */; };
 		507693CB2C942C3F0071A6EC /* PexelsPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507693CA2C942C3F0071A6EC /* PexelsPhotoCollectionViewCell.swift */; };
 		507693CD2C942C5F0071A6EC /* PexelsVideoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507693CC2C942C5F0071A6EC /* PexelsVideoCollectionViewCell.swift */; };
+		507CAFD32CD00F34001A1AFA /* LoadingCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CAFD22CD00F34001A1AFA /* LoadingCellViewController.swift */; };
+		50AC26642CC80BAC004AFA05 /* IndicatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AC26632CC80BAC004AFA05 /* IndicatorCell.swift */; };
 		50AE4B952C9FD4C800951B44 /* PexelsVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AE4B942C9FD4C800951B44 /* PexelsVideoViewController.swift */; };
 		50BB7C2F2C70DED3002FC184 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB7C2E2C70DED3002FC184 /* AppDelegate.swift */; };
 		50BB7C312C70DED3002FC184 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB7C302C70DED3002FC184 /* SceneDelegate.swift */; };
@@ -43,6 +45,7 @@
 		50CB86F42CC6758C00C1971E /* TaggingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB86F32CC6758C00C1971E /* TaggingViewController.swift */; };
 		50CB86F62CC6790200C1971E /* Tagging.json in Resources */ = {isa = PBXBuildFile; fileRef = 50CB86F52CC6790200C1971E /* Tagging.json */; };
 		50CB86F82CC67CB100C1971E /* TaggingImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB86F72CC67CB100C1971E /* TaggingImageViewController.swift */; };
+		50D07F202CC6D8430098CA1D /* OverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D07F1F2CC6D8430098CA1D /* OverlayViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +80,8 @@
 		507693C82C942BEA0071A6EC /* PexelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsViewController.swift; sourceTree = "<group>"; };
 		507693CA2C942C3F0071A6EC /* PexelsPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		507693CC2C942C5F0071A6EC /* PexelsVideoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsVideoCollectionViewCell.swift; sourceTree = "<group>"; };
+		507CAFD22CD00F34001A1AFA /* LoadingCellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCellViewController.swift; sourceTree = "<group>"; };
+		50AC26632CC80BAC004AFA05 /* IndicatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorCell.swift; sourceTree = "<group>"; };
 		50AE4B942C9FD4C800951B44 /* PexelsVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsVideoViewController.swift; sourceTree = "<group>"; };
 		50BB7C2B2C70DED3002FC184 /* MVVM+C.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MVVM+C.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50BB7C2E2C70DED3002FC184 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +109,7 @@
 		50CB86F32CC6758C00C1971E /* TaggingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggingViewController.swift; sourceTree = "<group>"; };
 		50CB86F52CC6790200C1971E /* Tagging.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Tagging.json; sourceTree = "<group>"; };
 		50CB86F72CC67CB100C1971E /* TaggingImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggingImageViewController.swift; sourceTree = "<group>"; };
+		50D07F1F2CC6D8430098CA1D /* OverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +145,7 @@
 				507693CA2C942C3F0071A6EC /* PexelsPhotoCollectionViewCell.swift */,
 				507693CC2C942C5F0071A6EC /* PexelsVideoCollectionViewCell.swift */,
 				50BE497A2C9707B6009C58DA /* PexelsCollectionViewCell.swift */,
+				50AC26632CC80BAC004AFA05 /* IndicatorCell.swift */,
 			);
 			path = CollectionViewCells;
 			sourceTree = "<group>";
@@ -154,6 +161,8 @@
 				50AE4B942C9FD4C800951B44 /* PexelsVideoViewController.swift */,
 				50CB86F32CC6758C00C1971E /* TaggingViewController.swift */,
 				50CB86F72CC67CB100C1971E /* TaggingImageViewController.swift */,
+				50D07F1F2CC6D8430098CA1D /* OverlayViewController.swift */,
+				507CAFD22CD00F34001A1AFA /* LoadingCellViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -493,15 +502,18 @@
 				50BE49832C98E890009C58DA /* VideoManager.swift in Sources */,
 				50BF17D42CB2229700D52D3E /* ContentInsetsViewController.swift in Sources */,
 				507693C32C94274A0071A6EC /* PexelsNetwork.swift in Sources */,
+				507CAFD32CD00F34001A1AFA /* LoadingCellViewController.swift in Sources */,
 				50BE497B2C9707B6009C58DA /* PexelsCollectionViewCell.swift in Sources */,
 				5029CEA92C800093008E5F42 /* HomeViewController.swift in Sources */,
 				50CB86F82CC67CB100C1971E /* TaggingImageViewController.swift in Sources */,
 				507693BA2C94023D0071A6EC /* PokemonCollectionView.swift in Sources */,
+				50D07F202CC6D8430098CA1D /* OverlayViewController.swift in Sources */,
 				50BB7C6B2C70E2A3002FC184 /* UIView+Extension.swift in Sources */,
 				50BB7C2F2C70DED3002FC184 /* AppDelegate.swift in Sources */,
 				50BB7C312C70DED3002FC184 /* SceneDelegate.swift in Sources */,
 				507693C12C9409FA0071A6EC /* PokemonNetwork.swift in Sources */,
 				50BB7C682C70E00E002FC184 /* ViewModel.swift in Sources */,
+				50AC26642CC80BAC004AFA05 /* IndicatorCell.swift in Sources */,
 				50BC164D2CA438F500ED415D /* DiffableDataSourceViewController.swift in Sources */,
 				50BB7C752C723049002FC184 /* NSLayoutConstraint+Extension.swift in Sources */,
 				507693C72C942BBA0071A6EC /* PexelsViewModel.swift in Sources */,
