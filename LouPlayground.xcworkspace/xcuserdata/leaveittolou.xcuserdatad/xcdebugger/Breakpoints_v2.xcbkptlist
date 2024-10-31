@@ -23,32 +23,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2074433B-A1C0-4AC4-B3CC-1CAB9AFDFE8A"
+            uuid = "0172FE3A-ADD9-4E62-A432-E01F7BA45DCD"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/LoadingCellViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
-            landmarkName = "loadMoreData()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "BA110D6D-1D92-47EF-943E-17809FC38847"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Architecture/MVVM+C/MVVM+C/Views/ViewControllers/LoadingCellViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
-            landmarkName = "collectionView(_:prefetchItemsAt:)"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "setupDataSource()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
