@@ -53,7 +53,7 @@ class HomeViewController: UIViewController {
         HomeViewModel(text: "Tagging",
                       viewController: TaggingViewController()
                      ),
-        HomeViewModel(text: "Overlay",
+        HomeViewModel(text: "Overlay Controller",
                       viewController: OverlayViewController()
                      ),
         HomeViewModel(text: "Loading Cell",

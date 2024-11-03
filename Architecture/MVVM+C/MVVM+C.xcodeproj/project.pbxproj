@@ -10,6 +10,13 @@
 		5029CEA92C800093008E5F42 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029CEA82C800093008E5F42 /* HomeViewController.swift */; };
 		5029CF0F2C91B247008E5F42 /* DD4Y_UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5029CF0E2C91B247008E5F42 /* DD4Y_UIKit.framework */; };
 		5029CF112C9331F6008E5F42 /* PokemonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029CF102C9331F6008E5F42 /* PokemonCollectionViewCell.swift */; };
+		502DBCDA2CD5C79C00AC6A7E /* OverlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DBCD92CD5C79C00AC6A7E /* OverlayCollectionViewCell.swift */; };
+		502DBCDC2CD5CBE500AC6A7E /* ErrorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DBCDB2CD5CBE500AC6A7E /* ErrorCollectionViewCell.swift */; };
+		502DBCDE2CD5CEAF00AC6A7E /* OverlayViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DBCDD2CD5CEAF00AC6A7E /* OverlayViewController+Extensions.swift */; };
+		502DBCE02CD65AEF00AC6A7E /* Overlay.json in Resources */ = {isa = PBXBuildFile; fileRef = 502DBCDF2CD65AE800AC6A7E /* Overlay.json */; };
+		502DBCE22CD65CFD00AC6A7E /* OverlayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DBCE12CD65CFD00AC6A7E /* OverlayModel.swift */; };
+		502DBCE42CD65D7600AC6A7E /* OverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DBCE32CD65D7600AC6A7E /* OverlayViewModel.swift */; };
+		502DBCE62CD6C2FC00AC6A7E /* OverlayArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DBCE52CD6C2FC00AC6A7E /* OverlayArrowView.swift */; };
 		507693BA2C94023D0071A6EC /* PokemonCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507693B92C94023D0071A6EC /* PokemonCollectionView.swift */; };
 		507693BC2C9403EF0071A6EC /* PokemonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507693BB2C9403EF0071A6EC /* PokemonViewController.swift */; };
 		507693BE2C94085C0071A6EC /* PokemonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507693BD2C94085C0071A6EC /* PokemonModel.swift */; };
@@ -70,6 +77,13 @@
 		5029CEAB2C8367FD008E5F42 /* MVVM.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MVVM.xcodeproj; path = "New Group/MVVM/MVVM.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		5029CF0E2C91B247008E5F42 /* DD4Y_UIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DD4Y_UIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5029CF102C9331F6008E5F42 /* PokemonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCollectionViewCell.swift; sourceTree = "<group>"; };
+		502DBCD92CD5C79C00AC6A7E /* OverlayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayCollectionViewCell.swift; sourceTree = "<group>"; };
+		502DBCDB2CD5CBE500AC6A7E /* ErrorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCollectionViewCell.swift; sourceTree = "<group>"; };
+		502DBCDD2CD5CEAF00AC6A7E /* OverlayViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OverlayViewController+Extensions.swift"; sourceTree = "<group>"; };
+		502DBCDF2CD65AE800AC6A7E /* Overlay.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Overlay.json; sourceTree = "<group>"; };
+		502DBCE12CD65CFD00AC6A7E /* OverlayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayModel.swift; sourceTree = "<group>"; };
+		502DBCE32CD65D7600AC6A7E /* OverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewModel.swift; sourceTree = "<group>"; };
+		502DBCE52CD6C2FC00AC6A7E /* OverlayArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayArrowView.swift; sourceTree = "<group>"; };
 		507693B92C94023D0071A6EC /* PokemonCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCollectionView.swift; sourceTree = "<group>"; };
 		507693BB2C9403EF0071A6EC /* PokemonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonViewController.swift; sourceTree = "<group>"; };
 		507693BD2C94085C0071A6EC /* PokemonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonModel.swift; sourceTree = "<group>"; };
@@ -146,6 +160,9 @@
 				507693CC2C942C5F0071A6EC /* PexelsVideoCollectionViewCell.swift */,
 				50BE497A2C9707B6009C58DA /* PexelsCollectionViewCell.swift */,
 				50AC26632CC80BAC004AFA05 /* IndicatorCell.swift */,
+				502DBCD92CD5C79C00AC6A7E /* OverlayCollectionViewCell.swift */,
+				502DBCDB2CD5CBE500AC6A7E /* ErrorCollectionViewCell.swift */,
+				502DBCE52CD6C2FC00AC6A7E /* OverlayArrowView.swift */,
 			);
 			path = CollectionViewCells;
 			sourceTree = "<group>";
@@ -163,6 +180,7 @@
 				50CB86F72CC67CB100C1971E /* TaggingImageViewController.swift */,
 				50D07F1F2CC6D8430098CA1D /* OverlayViewController.swift */,
 				507CAFD22CD00F34001A1AFA /* LoadingCellViewController.swift */,
+				502DBCDD2CD5CEAF00AC6A7E /* OverlayViewController+Extensions.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -266,6 +284,7 @@
 				50BB7C652C70DFE6002FC184 /* Model.swift */,
 				507693BD2C94085C0071A6EC /* PokemonModel.swift */,
 				507693C42C9427A70071A6EC /* PexelsModel.swift */,
+				502DBCE12CD65CFD00AC6A7E /* OverlayModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -276,6 +295,7 @@
 				50BB7C672C70E00E002FC184 /* ViewModel.swift */,
 				507693C62C942BBA0071A6EC /* PexelsViewModel.swift */,
 				50BC164E2CA4395000ED415D /* DiffableViewModel.swift */,
+				502DBCE32CD65D7600AC6A7E /* OverlayViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -348,6 +368,7 @@
 		50CB86EC2CC4FD6400C1971E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				502DBCDF2CD65AE800AC6A7E /* Overlay.json */,
 				50CB86F52CC6790200C1971E /* Tagging.json */,
 			);
 			path = Resources;
@@ -465,6 +486,7 @@
 			files = (
 				50CB86F62CC6790200C1971E /* Tagging.json in Resources */,
 				50BB7C3B2C70DED5002FC184 /* Assets.xcassets in Resources */,
+				502DBCE02CD65AEF00AC6A7E /* Overlay.json in Resources */,
 				50BB7C3E2C70DED5002FC184 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -493,6 +515,8 @@
 				50BB7C6D2C721F27002FC184 /* Coordinator.swift in Sources */,
 				50AE4B952C9FD4C800951B44 /* PexelsVideoViewController.swift in Sources */,
 				50BC164F2CA4395000ED415D /* DiffableViewModel.swift in Sources */,
+				502DBCDA2CD5C79C00AC6A7E /* OverlayCollectionViewCell.swift in Sources */,
+				502DBCE62CD6C2FC00AC6A7E /* OverlayArrowView.swift in Sources */,
 				507693C92C942BEA0071A6EC /* PexelsViewController.swift in Sources */,
 				507693BE2C94085C0071A6EC /* PokemonModel.swift in Sources */,
 				507693CB2C942C3F0071A6EC /* PexelsPhotoCollectionViewCell.swift in Sources */,
@@ -500,7 +524,9 @@
 				507693BC2C9403EF0071A6EC /* PokemonViewController.swift in Sources */,
 				5029CF112C9331F6008E5F42 /* PokemonCollectionViewCell.swift in Sources */,
 				50BE49832C98E890009C58DA /* VideoManager.swift in Sources */,
+				502DBCE42CD65D7600AC6A7E /* OverlayViewModel.swift in Sources */,
 				50BF17D42CB2229700D52D3E /* ContentInsetsViewController.swift in Sources */,
+				502DBCE22CD65CFD00AC6A7E /* OverlayModel.swift in Sources */,
 				507693C32C94274A0071A6EC /* PexelsNetwork.swift in Sources */,
 				507CAFD32CD00F34001A1AFA /* LoadingCellViewController.swift in Sources */,
 				50BE497B2C9707B6009C58DA /* PexelsCollectionViewCell.swift in Sources */,
@@ -514,8 +540,10 @@
 				507693C12C9409FA0071A6EC /* PokemonNetwork.swift in Sources */,
 				50BB7C682C70E00E002FC184 /* ViewModel.swift in Sources */,
 				50AC26642CC80BAC004AFA05 /* IndicatorCell.swift in Sources */,
+				502DBCDE2CD5CEAF00AC6A7E /* OverlayViewController+Extensions.swift in Sources */,
 				50BC164D2CA438F500ED415D /* DiffableDataSourceViewController.swift in Sources */,
 				50BB7C752C723049002FC184 /* NSLayoutConstraint+Extension.swift in Sources */,
+				502DBCDC2CD5CBE500AC6A7E /* ErrorCollectionViewCell.swift in Sources */,
 				507693C72C942BBA0071A6EC /* PexelsViewModel.swift in Sources */,
 				50CB86F42CC6758C00C1971E /* TaggingViewController.swift in Sources */,
 				507693CD2C942C5F0071A6EC /* PexelsVideoCollectionViewCell.swift in Sources */,
